@@ -43,6 +43,11 @@
   --radius-card-lg:            20px;
 }
 
+em {
+  font-style: italic;
+  color: inherit;
+}
+
 /* Dark amber grain overlay */
 body::after {
   content: '';

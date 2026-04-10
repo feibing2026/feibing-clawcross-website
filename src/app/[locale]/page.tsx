@@ -1,7 +1,15 @@
-export default function HomePage() {
+import { setRequestLocale } from 'next-intl/server'
+import { HeroSection } from '@/components/home/HeroSection'
+
+type Props = { params: Promise<{ locale: string }> }
+
+export default async function HomePage({ params }: Props) {
+  const { locale } = await params
+  setRequestLocale(locale)
+
   return (
-    <main className="min-h-screen flex items-center justify-center">
-      <h1 className="font-display text-5xl text-amber">ClawCross</h1>
+    <main>
+      <HeroSection />
     </main>
   )
 }
