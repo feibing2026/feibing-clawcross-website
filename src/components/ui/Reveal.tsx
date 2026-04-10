@@ -13,7 +13,7 @@ export function Reveal({ children, className = '', delay = 0 }: RevealProps) {
   return (
     <div
       ref={ref}
-      style={{ transitionDelay: visible ? `${delay}ms` : '0ms' }}
+      style={{ transitionDelay: `${delay}ms` }}
       className={`transition-all duration-700 ${
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
       } ${className}`}

@@ -2,6 +2,10 @@ import { useTranslations } from 'next-intl'
 import { ChatDemo } from './ChatDemo'
 import { Reveal } from '@/components/ui/Reveal'
 
+/**
+ * Server Component — requires `setRequestLocale(locale)` to have been called
+ * by the parent route (e.g. `[locale]/page.tsx`) before rendering.
+ */
 export function HeroSection() {
   const t = useTranslations('hero')
 
