@@ -1,0 +1,61 @@
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+
+@theme {
+  /* Colors — amber palette */
+  --color-amber:               #C07838;
+  --color-amber-light:         #D4904A;
+  --color-amber-glow:          rgba(192,120,56,0.18);
+  --color-amber-subtle:        rgba(192,120,56,0.08);
+  --color-amber-border:        rgba(192,120,56,0.22);
+  --color-amber-strong:        rgba(192,120,56,0.35);
+
+  /* Colors — background */
+  --color-bg:                  #0B0906;
+  --color-bg-card:             #131009;
+  --color-bg-elevated:         #1C1810;
+
+  /* Colors — text */
+  --color-text:                #FAF9F6;
+  --color-text-2:              #C8C2B8;
+  --color-text-muted:          #7D7568;
+  --color-text-dim:            #48433C;
+
+  /* Colors — border */
+  --color-border:              rgba(192,120,56,0.13);
+  --color-border-strong:       rgba(192,120,56,0.28);
+
+  /* Colors — status */
+  --color-success:             #3E8A58;
+  --color-warning:             #BE8420;
+  --color-error:               #B83C2F;
+
+  /* Typography */
+  --font-display:              'DM Serif Display', Georgia, serif;
+  --font-sans:                 'Outfit', system-ui, sans-serif;
+  --font-mono:                 'JetBrains Mono', monospace;
+
+  /* Sizing */
+  --max-width-site:            1200px;
+
+  /* Border radius */
+  --radius-card:               12px;
+  --radius-card-lg:            20px;
+}
+
+em {
+  font-style: italic;
+  color: inherit;
+}
+
+/* Dark amber grain overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.032;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 300px 300px;
+}

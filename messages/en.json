@@ -1,0 +1,159 @@
+{
+  "nav": {
+    "product": "Product",
+    "pipeline": "Pipeline",
+    "skills": "Skills",
+    "integrations": "Integrations",
+    "ecosystem": "Ecosystem",
+    "docs": "Docs",
+    "signin": "Sign In",
+    "cta": "Get Early Access →"
+  },
+  "hero": {
+    "badge": "Early Access · Launching 2026",
+    "title": "Every seller deserves a<em>world-class COO.</em>",
+    "desc": "ClawCross is the AI-native intelligent workbench for cross-border e-commerce. Three intelligent hands reach any platform—while your AI COO partner runs the entire operation, around the clock.",
+    "cta1": "Get Early Access →",
+    "cta2": "See How It Works",
+    "proof": "Join <strong>500+ sellers</strong> on the early access waitlist",
+    "termTitle": "ClawCross · Project: Pet Water Fountain · US"
+  },
+  "chat": {
+    "termTitle": "ClawCross · Project: Pet Water Fountain · US",
+    "messages": [
+      { "role": "ai", "text": "Good morning. Competitor \"SmartPaw Pro\" dropped prices 18% overnight on Amazon US. I've prepared three response scenarios.", "tags": ["data-analytics", "market-research"], "delay": 800 },
+      { "role": "user", "text": "Show me the conservative option.", "delay": 2600 },
+      { "role": "ai", "text": "Conservative: Hold price, boost PPC by 15% targeting their ASIN. Projected ACoS stays under 22%. Estimated weekly revenue impact: <strong>+$340</strong>.", "tags": ["advertising", "pricing-strategy"], "delay": 4200 }
+    ]
+  },
+  "stats": {
+    "v1": "35%", "l1": "Avg Revenue Improvement",
+    "v2": "16", "l2": "Specialized AI Skills",
+    "v3": "10+", "l3": "Platform Coverage",
+    "v4": "3", "l4": "Intelligent Reach Modes"
+  },
+  "hands": {
+    "eyebrow": "Three Intelligent Hands",
+    "title": "Reach <em>any</em> platform, without limits.",
+    "desc": "ClawCross intelligently routes every operation through the fastest, most reliable channel. You never choose—the AI does.",
+    "h1": {
+      "sub": "The Highway", "title": "CLI / MCP Direct",
+      "desc": "Lightning-fast structured API connections to platforms. The most precise path for automation, bulk sync, and real-time data.",
+      "feats": ["Amazon SP-API — orders, ads, inventory, FBA", "Shopee, TikTok Shop, Lazada Open APIs", "ERP integrations via MCP protocol", "Batch operations at unlimited scale"]
+    },
+    "h2": {
+      "sub": "The Master Key", "title": "ClawCross in Chrome",
+      "desc": "AI-powered browser automation that works on any website. When a platform lacks an API, ClawCross reads the DOM and drives the browser like a human expert.",
+      "feats": ["Full automation on Temu, Coupang, 1688", "Competitor listing scraping & price tracking", "Supplier discovery via reverse image search", "Bulk backend operations on any web portal"]
+    },
+    "h3": {
+      "sub": "The Super Arm", "title": "Computer Use",
+      "desc": "AI-driven desktop control that operates any software. From legacy ERPs to Photoshop—if you can click it, ClawCross automates it.",
+      "feats": ["Local ERP automation (Mabang, Tongtong)", "Excel & spreadsheet reporting workflows", "Image editing via Photoshop or Canva", "Cross-app pipelines & file management"]
+    }
+  },
+  "pipeline": {
+    "eyebrow": "5-Stage Product Pipeline",
+    "title": "From idea to <em>optimized operation.</em>",
+    "desc": "Every product follows a disciplined five-stage pipeline with quality gates. No guesswork—only advance when you're truly ready.",
+    "s1": { "e": "Discover", "n": "Market Research", "d": "AI evaluates demand, competition, logistics & compliance across target markets", "g": "✓ Score ≥ 21/30" },
+    "s2": { "e": "Source", "n": "Supplier Sourcing", "d": "Automated 1688 scraping, supplier comparison, negotiation scripts & full landed cost", "g": "✓ Margin ≥ 30%" },
+    "s3": { "e": "Launch", "n": "Listing Creation", "d": "Multi-language AI listings with SEO optimization, quality scoring & A/B testing ready", "g": "✓ Score ≥ 85/100" },
+    "s4": { "e": "Publish", "n": "Multi-Platform", "d": "Auto-publish to Amazon, Shopee, TikTok Shop, Temu and more with platform-specific pricing", "g": "✓ Profit target met" },
+    "s5": { "e": "Optimize", "n": "AI Operations", "d": "Continuous ads, pricing, inventory & customer service optimization with daily briefings", "g": "∞ Always running" }
+  },
+  "skills": {
+    "eyebrow": "16 AI Skills",
+    "title": "Every skill you need, <em>built in.</em>",
+    "desc": "Each Skill is a deep knowledge module covering one domain of cross-border commerce. Your AI COO draws on all 16 simultaneously.",
+    "legend": ["Discover phase", "Source phase", "Launch phase", "Publish & Optimize", "Risk & Compliance"],
+    "pills": [
+      {"e":"🔭","n":"Market Research","p":"Discover","c":"discover"},
+      {"e":"🎯","n":"Product Selection","p":"Discover","c":"discover"},
+      {"e":"🏭","n":"Supplier Sourcing","p":"Source","c":"source"},
+      {"e":"💰","n":"Pricing Strategy","p":"Source","c":"source"},
+      {"e":"✍️","n":"Product Listing","p":"Launch","c":"launch"},
+      {"e":"📦","n":"Inventory Mgmt","p":"Launch","c":"launch"},
+      {"e":"🚚","n":"Order Fulfillment","p":"Launch","c":"launch"},
+      {"e":"📣","n":"Advertising","p":"Optimize","c":"publish"},
+      {"e":"💬","n":"Customer Service","p":"Optimize","c":"publish"},
+      {"e":"🏷","n":"Brand Building","p":"Optimize","c":"publish"},
+      {"e":"📊","n":"Data Analytics","p":"Optimize","c":"optimize"},
+      {"e":"💹","n":"Financial Mgmt","p":"Optimize","c":"optimize"},
+      {"e":"🛡","n":"Platform Compliance","p":"Protect","c":"protect"},
+      {"e":"⚠️","n":"Risk Management","p":"Protect","c":"protect"},
+      {"e":"🎄","n":"Seasonal Planning","p":"Protect","c":"protect"},
+      {"e":"🌐","n":"Multi-Platform","p":"Publish","c":"publish"}
+    ]
+  },
+  "modes": {
+    "eyebrow": "Adaptive Intelligence",
+    "title": "Grows with <em>your business.</em>",
+    "desc": "ClawCross adapts to your experience and trust level. Start with guided assistance, evolve to full autonomy on your own timeline.",
+    "m1": {
+      "badge": "Navigation Mode", "user": "For: New Sellers", "title": "Guided Every Step",
+      "desc": "AI actively leads you through each decision. Every action is explained, confirmed, and tracked. Build your first international business with confidence.",
+      "feats": ["Step-by-step AI guidance", "Confirm before every action", "Plain-language explanations", "Natural language for everything"]
+    },
+    "m2": {
+      "badge": "Copilot Mode", "user": "For: Experienced Sellers", "title": "Side by Side",
+      "desc": "AI works alongside you, surfacing insights and anomalies before they become problems. You make the calls, AI handles monitoring and groundwork.",
+      "feats": ["Proactive daily briefings", "Anomaly detection & alerts", "Confirm medium-risk actions", "Real-time strategy recommendations"]
+    },
+    "m3": {
+      "badge": "Autopilot Mode", "user": "For: Large Sellers & Teams", "title": "Run on Autopilot",
+      "desc": "AI autonomously executes hundreds of daily operations. Set your thresholds, define your rules, and only intervene for high-stakes decisions.",
+      "feats": ["Fully autonomous daily operations", "Custom rule engine & conditions", "Only confirm changes > $500", "Full audit trail & reporting"]
+    }
+  },
+  "eco": {
+    "eyebrow": "OpenClaw Cloud",
+    "title": "A living <em>ecosystem</em> of intelligence.",
+    "desc": "ClawCross is more than a tool—it's a platform. Build, publish, and monetize custom Agents for the cross-border commerce industry.",
+    "f1": { "name": "Agent Marketplace", "desc": "50+ Agents covering every e-commerce scenario. Install with one click. Publish your own and earn 70% revenue." },
+    "f2": { "name": "Developer Platform", "desc": "Full SDK, secure sandbox, MCP tools, and 70% revenue share. Build once, sell to thousands of sellers." },
+    "f3": { "name": "Vertical Skill Packs", "desc": "Category-specific packs for electronics, fashion, home goods, and beauty—with deep platform knowledge built in." },
+    "cards": [
+      {"e":"🚀","t":"Zero to Launch","d":"Market research through first sale in a single guided workflow"},
+      {"e":"⚡","t":"Fast Follow","d":"Competitor analysis to differentiated listing in under 24 hours"},
+      {"e":"🔧","t":"Listing Optimizer","d":"Diagnose underperformers and automatically run A/B improvements"},
+      {"e":"🎯","t":"Peak Season Battle Plan","d":"90-day Black Friday / Prime Day / 11.11 preparation workflow"},
+      {"e":"🌐","t":"Platform Expansion","d":"Evaluate, adapt listings, and launch into new markets end-to-end"},
+      {"e":"🔄","t":"Daily Ops Autopilot","d":"Automated daily reports, anomaly handling, and self-adjustment"}
+    ]
+  },
+  "conn": {
+    "eyebrow": "Native Integrations",
+    "title": "Connected to every platform <em>you sell on.</em>",
+    "desc": "10+ native connectors out of the box. If a platform has an API, ClawCross uses it. If not, ClawCross in Chrome handles it.",
+    "status": { "active": "Active", "beta": "Beta", "coming": "Coming Soon" },
+    "cards": [
+      {"n":"Amazon","s":"active","t":"SP-API · Ads API","d":"Orders, advertising, inventory, FBA, Brand Analytics","r":["US","JP","DE","UK"]},
+      {"n":"Shopee","s":"active","t":"Open API","d":"Products, orders, chat, logistics & marketing campaigns","r":["MY","SG","TH","PH"]},
+      {"n":"TikTok Shop","s":"active","t":"Open API","d":"Products, orders, creator campaigns & short video ads","r":["US","UK","ID"]},
+      {"n":"1688","s":"active","t":"API + Browser Use","d":"Supplier search, product detail, reverse image sourcing","r":["China"]},
+      {"n":"Temu","s":"beta","t":"Browser Use","d":"Full portal automation — listings, promotions, orders","r":["US","EU"]},
+      {"n":"Lazada","s":"beta","t":"Open API","d":"Products, orders, logistics & marketing automation","r":["SEA"]},
+      {"n":"Mabang ERP","s":"active","t":"MCP + Computer Use","d":"Orders, inventory, procurement & financial sync","r":["All"]},
+      {"n":"Shopify","s":"coming","t":"REST + GraphQL","d":"Independent store products, orders, themes & analytics","r":["Global"]}
+    ]
+  },
+  "cta": {
+    "eyebrow": "Early Access",
+    "title": "Start with your<em>AI COO</em> today.",
+    "desc": "Join hundreds of cross-border sellers on the waitlist. Early access members get priority onboarding and founding-tier pricing.",
+    "placeholder": "your@email.com",
+    "btn": "Request Access →",
+    "note": "No spam. No credit card. Cancel anytime.",
+    "success": "✓ You're on the list!"
+  },
+  "footer": {
+    "tagline": "The AI-native intelligent workbench for cross-border e-commerce. Your AI COO partner that never sleeps, never misses a signal, and always works toward your growth.",
+    "col1": "Product", "col2": "Platforms", "col3": "Company",
+    "links1": ["Features", "Three Hands", "16 AI Skills", "OpenClaw Cloud", "Pricing", "Changelog"],
+    "links2": ["Amazon", "Shopee", "TikTok Shop", "Temu", "1688", "All Platforms →"],
+    "links3": ["About", "Blog", "Documentation", "Developer Portal", "Careers", "Contact"],
+    "copy": "© 2026 ClawCross. All rights reserved.",
+    "legal": ["Privacy Policy", "Terms of Service", "Cookie Policy"]
+  }
+}
