@@ -4,6 +4,8 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import { DM_Serif_Display, Outfit, JetBrains_Mono } from 'next/font/google'
+import { Nav } from '@/components/nav/Nav'
+import { Footer } from '@/components/footer/Footer'
 
 const dmSerif = DM_Serif_Display({
   subsets: ['latin'],
@@ -52,7 +54,9 @@ export default async function LocaleLayout({ children, params }: Props) {
     >
       <body className="font-sans bg-bg text-text antialiased overflow-x-hidden">
         <NextIntlClientProvider messages={messages}>
+          <Nav locale={locale} />
           {children}
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>
