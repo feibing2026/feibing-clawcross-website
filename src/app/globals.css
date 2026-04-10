@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @config "../../tailwind.config.ts";
 
+html {
+  scroll-behavior: smooth;
+}
+
 @theme {
   /* Colors — amber palette */
   --color-amber:               #C07838;
