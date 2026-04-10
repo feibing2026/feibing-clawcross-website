@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClawCross — 跨境电商AI智能工作台</title>
+  <meta name="description" content="ClawCross 是专为跨境电商卖家打造的AI原生智能工作台。三种智能触手，16项AI技能，你的专属AI COO合伙人。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --amber:        #C07838;
+      --amber-light:  #D4904A;
+      --amber-glow:   rgba(192,120,56,0.18);
+      --amber-subtle: rgba(192,120,56,0.08);
+      --amber-border: rgba(192,120,56,0.22);
+      --amber-strong: rgba(192,120,56,0.35);
+      --bg:           #0B0906;
+      --bg-card:      #131009;
+      --bg-elevated:  #1C1810;
+      --border:       rgba(192,120,56,0.13);
+      --border-strong:rgba(192,120,56,0.28);
+      --text:         #FAF9F6;
+      --text-2:       #C8C2B8;
+      --text-muted:   #7D7568;
+      --text-dim:     #48433C;
+      --success:      #3E8A58;
+      --warning:      #BE8420;
+      --error:        #B83C2F;
+      --sp:           #7868A8;
+      --db:           #4878AC;
+      --font-d: 'DM Serif Display', Georgia, serif;
+      --font-b: 'Outfit', system-ui, sans-serif;
+      --font-m: 'JetBrains Mono', monospace;
+      --mw: 1200px; --r: 12px; --rl: 20px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-b); background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+
+    body::after {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9998; opacity: 0.032;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 300px 300px;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; inset: 0 0 auto; z-index: 900; height: 62px; padding: 0 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(11,9,6,0.72); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border); transition: background 0.3s;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+    .logo-text { font-family: var(--font-d); font-size: 21px; letter-spacing: -0.02em; }
+    .logo-text b { color: var(--amber); font-weight: 400; }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+
+    /* Language toggle */
+    .lang-toggle {
+      display: flex; align-items: center; gap: 0;
+      border: 1px solid var(--border); border-radius: 7px;
+      overflow: hidden; font-family: var(--font-m); font-size: 12px;
+    }
+    .lang-btn {
+      padding: 6px 12px; cursor: pointer; background: transparent;
+      border: none; color: var(--text-muted); transition: all 0.2s;
+      font-family: var(--font-m); font-size: 12px; letter-spacing: 0.03em;
+    }
+    .lang-btn.active { background: var(--amber-subtle); color: var(--amber); }
+    .lang-btn:hover:not(.active) { color: var(--text); }
+    .lang-sep { width: 1px; background: var(--border); align-self: stretch; }
+
+    /* ─── BUTTONS ─── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 9px;
+      font-family: var(--font-b); font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s; text-decoration: none;
+      border: none; line-height: 1;
+    }
+    .btn-ghost { background: transparent; color: var(--text-2); border: 1px solid var(--border); }
+    .btn-ghost:hover { border-color: var(--border-strong); color: var(--text); }
+    .btn-amber { background: var(--amber); color: #fff; box-shadow: 0 0 20px rgba(192,120,56,0.28); }
+    .btn-amber:hover { background: var(--amber-light); box-shadow: 0 0 32px rgba(192,120,56,0.5); transform: translateY(-1px); }
+    .btn-lg { padding: 14px 28px; font-size: 16px; border-radius: 11px; }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center; padding: 120px 48px 80px; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 55% 65% at 18% 28%, rgba(192,120,56,0.20) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 45% at 78% 72%, rgba(192,120,56,0.10) 0%, transparent 55%),
+        radial-gradient(ellipse 70% 40% at 50% 0%, rgba(25,20,12,0.55) 0%, transparent 75%),
+        var(--bg);
+      animation: bgDrift 14s ease-in-out infinite alternate;
+    }
+    @keyframes bgDrift { 0% { transform: scale(1); } 100% { transform: scale(1.04) translate(1%,1%); } }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(192,120,56,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(192,120,56,0.035) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 0%, transparent 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 1; max-width: var(--mw); margin: 0 auto; width: 100%;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px;
+      background: var(--amber-subtle); border: 1px solid var(--amber-border); border-radius: 100px;
+      font-size: 12.5px; color: var(--amber-light); font-weight: 500; letter-spacing: 0.025em; margin-bottom: 28px;
+    }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); animation: blink 2.4s ease-in-out infinite; }
+    @keyframes blink { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.45; transform:scale(0.75); } }
+    .hero-h1 { font-family: var(--font-d); font-size: clamp(46px,5.5vw,78px); line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 24px; }
+    .hero-h1 em { font-style: italic; color: var(--amber); }
+    .hero-desc { font-size: 17px; color: var(--text-2); line-height: 1.75; font-weight: 300; max-width: 480px; margin-bottom: 40px; }
+    .hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .hero-proof { margin-top: 48px; display: flex; align-items: center; gap: 16px; }
+    .proof-avatars { display: flex; }
+    .proof-av {
+      width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--bg);
+      background: var(--bg-elevated); display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: var(--text-muted); margin-right: -8px;
+    }
+    .proof-av:last-child { margin-right: 0; }
+    .proof-text { font-size: 13px; color: var(--text-muted); }
+    .proof-text strong { color: var(--text-2); }
+    .hero-visual { position: relative; }
+    .hero-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--rl); overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.55), 0 0 80px rgba(192,120,56,0.08);
+    }
+    .card-titlebar { padding: 14px 18px; border-bottom: 1px solid var(--border); background: var(--bg-elevated); display: flex; align-items: center; gap: 10px; }
+    .wdots { display: flex; gap: 5px; }
+    .wd { width: 10px; height: 10px; border-radius: 50%; }
+    .wd-r { background: rgba(184,60,47,0.7); } .wd-y { background: rgba(190,132,32,0.7); } .wd-g { background: rgba(62,138,88,0.7); }
+    .card-ttitle { flex: 1; text-align: center; font-family: var(--font-m); font-size: 11px; color: var(--text-muted); letter-spacing: 0.04em; }
+    .chat-body { padding: 20px; min-height: 340px; display: flex; flex-direction: column; gap: 16px; }
+    .cmsg { display: flex; gap: 10px; opacity: 0; transform: translateY(10px); transition: opacity 0.45s ease, transform 0.45s ease; }
+    .cmsg.show { opacity: 1; transform: translateY(0); }
+    .cav { width: 26px; height: 26px; border-radius: 6px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; margin-top: 2px; }
+    .cav-ai { background: var(--amber-subtle); border: 1px solid var(--amber-border); color: var(--amber); }
+    .cav-u { background: var(--bg-elevated); color: var(--text-muted); border: 1px solid var(--border); }
+    .cbubble { flex: 1; }
+    .cname { font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 5px; }
+    .cname-ai { color: var(--amber); } .cname-u { color: var(--text-muted); }
+    .ctext { font-size: 13px; color: var(--text-2); line-height: 1.65; background: var(--bg-elevated); padding: 10px 13px; border-radius: 8px; border: 1px solid var(--border); }
+    .ctext-u { background: rgba(192,120,56,0.09); border-color: rgba(192,120,56,0.2); color: var(--text); }
+    .ctags { display: flex; gap: 6px; margin-top: 7px; flex-wrap: wrap; }
+    .ctag { font-family: var(--font-m); font-size: 10px; padding: 2px 8px; border-radius: 4px; background: rgba(120,104,168,0.12); border: 1px solid rgba(120,104,168,0.28); color: #9E8CC8; }
+    .typing { display: flex; gap: 4px; padding: 10px 13px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 8px; width: fit-content; opacity: 0; transition: opacity 0.3s; }
+    .typing.show { opacity: 1; }
+    .td { width: 5px; height: 5px; border-radius: 50%; background: var(--amber); animation: tdBounce 1.2s ease-in-out infinite; }
+    .td:nth-child(2) { animation-delay: 0.18s; } .td:nth-child(3) { animation-delay: 0.36s; }
+    @keyframes tdBounce { 0%,60%,100% { transform: translateY(0); opacity: 0.35; } 30% { transform: translateY(-5px); opacity: 1; } }
+    .hero-badge-float {
+      position: absolute; padding: 9px 14px; border-radius: 10px;
+      background: var(--bg-card); border: 1px solid var(--border); box-shadow: 0 10px 32px rgba(0,0,0,0.4);
+      display: flex; align-items: center; gap: 9px; font-size: 12px; color: var(--text-2); z-index: 2;
+    }
+    .hbf-1 { top: -18px; right: -22px; animation: floatA 5s ease-in-out infinite; }
+    .hbf-2 { bottom: 48px; left: -28px; animation: floatB 5s ease-in-out infinite; }
+    @keyframes floatA { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+    @keyframes floatB { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+    .fbdot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ─── MARQUEE ─── */
+    .marquee-wrap { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-card); padding: 16px 0; overflow: hidden; }
+    .marquee-inner { display: flex; animation: marquee 28s linear infinite; width: max-content; }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .marquee-item { display: flex; align-items: center; gap: 8px; padding: 0 36px; font-size: 13px; font-weight: 600; color: var(--text-dim); letter-spacing: 0.04em; border-right: 1px solid var(--border); white-space: nowrap; }
+    .marquee-item span { font-size: 15px; }
+
+    /* ─── STATS ─── */
+    #stats { background: var(--bg-card); border-bottom: 1px solid var(--border); }
+    .stats-grid { max-width: var(--mw); margin: 0 auto; padding: 0 48px; display: grid; grid-template-columns: repeat(4,1fr); }
+    .stat { padding: 44px 32px; text-align: center; border-right: 1px solid var(--border); }
+    .stat:last-child { border-right: none; }
+    .stat-val { font-family: var(--font-d); font-size: 52px; color: var(--amber); line-height: 1; margin-bottom: 8px; }
+    .stat-lbl { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+
+    /* ─── SECTION SHARED ─── */
+    section { padding: 100px 48px; }
+    .si { max-width: var(--mw); margin: 0 auto; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-m); font-size: 11px; color: var(--amber); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 20px; }
+    .eyebrow::before { content: ''; width: 22px; height: 1px; background: var(--amber); }
+    .eyebrow-c { justify-content: center; } .eyebrow-c::before { display: none; }
+    .eyebrow-c::after { content: ''; width: 22px; height: 1px; background: var(--amber); }
+    .sh { font-family: var(--font-d); font-size: clamp(34px,3.8vw,52px); line-height: 1.1; letter-spacing: -0.025em; margin-bottom: 18px; }
+    .sh em { font-style: italic; color: var(--amber); }
+    .sd { font-size: 17px; color: var(--text-2); line-height: 1.72; font-weight: 300; max-width: 560px; }
+
+    /* ─── HANDS ─── */
+    #hands { background: var(--bg); }
+    .hands-head { text-align: center; margin-bottom: 60px; }
+    .hands-head .sd { margin: 0 auto; text-align: center; }
+    .hands-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; background: var(--border); border-radius: var(--rl); overflow: hidden; }
+    .hand { background: var(--bg-card); padding: 48px 40px; position: relative; overflow: hidden; transition: background 0.3s; }
+    .hand:hover { background: var(--bg-elevated); }
+    .hand-num { position: absolute; top: 22px; right: 26px; font-family: var(--font-m); font-size: 52px; color: rgba(72,67,60,0.35); line-height: 1; user-select: none; }
+    .hand-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 28px; position: relative; }
+    .hand-icon::after { content: ''; position: absolute; inset: 0; border-radius: 14px; border: 1px solid var(--border); }
+    .hi-1 { background: rgba(192,120,56,0.1); } .hi-2 { background: rgba(72,120,172,0.1); } .hi-3 { background: rgba(62,138,88,0.1); }
+    .hand-sub { font-family: var(--font-m); font-size: 10.5px; color: var(--amber); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+    .hand-title { font-family: var(--font-d); font-size: 26px; letter-spacing: -0.02em; margin-bottom: 14px; }
+    .hand-desc { font-size: 14px; color: var(--text-2); line-height: 1.72; margin-bottom: 26px; }
+    .hand-feats { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .hand-feats li { font-size: 13px; color: var(--text-muted); display: flex; align-items: flex-start; gap: 8px; }
+    .hand-feats li::before { content: '→'; color: var(--amber); flex-shrink: 0; }
+
+    /* ─── PIPELINE ─── */
+    #pipeline { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .pipe-header { margin-bottom: 64px; }
+    .pipe-flow { display: grid; grid-template-columns: repeat(5,1fr); position: relative; }
+    .pipe-flow::before {
+      content: ''; position: absolute; top: 31px; left: calc(10% + 0px); right: calc(10% + 0px);
+      height: 1px; background: linear-gradient(90deg, transparent, var(--amber) 20%, var(--amber) 80%, transparent);
+      opacity: 0.3; animation: pipeLine 4s ease-in-out infinite alternate;
+    }
+    @keyframes pipeLine { 0% { opacity: 0.2; } 100% { opacity: 0.55; } }
+    .pstep { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 12px; position: relative; }
+    .pnode { width: 62px; height: 62px; border-radius: 50%; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; background: var(--bg-card); z-index: 1; font-size: 20px; position: relative; margin-bottom: 22px; transition: all 0.3s; }
+    .pstep:hover .pnode { border-color: var(--amber); background: var(--amber-subtle); box-shadow: 0 0 28px var(--amber-glow); }
+    .pstep-num { position: absolute; top: -7px; right: -7px; width: 20px; height: 20px; border-radius: 50%; background: var(--amber); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+    .pstep-eyebrow { font-family: var(--font-m); font-size: 10px; color: var(--amber); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 6px; }
+    .pstep-name { font-family: var(--font-d); font-size: 17px; margin-bottom: 8px; }
+    .pstep-desc { font-size: 12px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px; }
+    .pgate { font-size: 11px; display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 100px; background: rgba(62,138,88,0.1); border: 1px solid rgba(62,138,88,0.2); color: var(--success); }
+    .pgate-amber { background: rgba(192,120,56,0.1); border-color: rgba(192,120,56,0.2); color: var(--amber); }
+
+    /* ─── SKILLS ─── */
+    #skills { background: var(--bg); }
+    .skills-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 80px; align-items: start; }
+    .legend { display: flex; flex-direction: column; gap: 10px; margin-top: 28px; }
+    .leg-item { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-muted); }
+    .leg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .skills-cloud { display: flex; flex-wrap: wrap; gap: 10px; }
+    .skill-pill { display: flex; align-items: center; gap: 9px; padding: 10px 14px; border-radius: 10px; background: var(--bg-card); border: 1px solid var(--border); cursor: pointer; transition: all 0.2s; }
+    .skill-pill:hover { border-color: rgba(120,104,168,0.4); background: rgba(120,104,168,0.07); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+    .skill-emoji { font-size: 15px; }
+    .skill-info-name { font-size: 13px; font-weight: 600; display: block; }
+    .skill-info-phase { font-size: 10px; font-family: var(--font-m); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-top: 1px; }
+    .sp-discover .skill-info-phase { color: var(--amber); } .sp-source .skill-info-phase { color: var(--warning); }
+    .sp-launch .skill-info-phase { color: var(--db); } .sp-publish .skill-info-phase { color: var(--sp); }
+    .sp-optimize .skill-info-phase { color: var(--success); } .sp-protect .skill-info-phase { color: var(--error); }
+
+    /* ─── MODES ─── */
+    #modes { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .modes-head { text-align: center; margin-bottom: 60px; }
+    .modes-head .sd { margin: 0 auto; text-align: center; }
+    .modes-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+    .mode-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--rl); padding: 40px 32px; position: relative; overflow: hidden; transition: all 0.3s; }
+    .mode-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--amber-subtle) 0%, transparent 55%); opacity: 0; transition: opacity 0.3s; }
+    .mode-card:hover::before { opacity: 1; }
+    .mode-card:hover { border-color: var(--border-strong); transform: translateY(-4px); box-shadow: 0 24px 60px rgba(0,0,0,0.3), 0 0 32px rgba(192,120,56,0.08); }
+    .mode-badge { display: inline-block; padding: 4px 12px; border-radius: 100px; font-size: 10.5px; font-weight: 600; font-family: var(--font-m); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 22px; }
+    .mb-nav { background: rgba(192,120,56,0.12); color: var(--amber); }
+    .mb-co  { background: rgba(72,120,172,0.12); color: #6898C8; }
+    .mb-auto{ background: rgba(62,138,88,0.12);  color: #5EAA78; }
+    .mode-icon { font-size: 36px; margin-bottom: 18px; display: block; }
+    .mode-user { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; font-family: var(--font-m); }
+    .mode-title { font-family: var(--font-d); font-size: 26px; margin-bottom: 12px; }
+    .mode-desc { font-size: 14px; color: var(--text-2); line-height: 1.7; margin-bottom: 22px; }
+    .mode-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .mode-list li { font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+    .chk { color: var(--success); }
+
+    /* ─── ECOSYSTEM ─── */
+    #ecosystem { background: var(--bg); }
+    .eco-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .eco-features { display: flex; flex-direction: column; gap: 20px; margin-top: 36px; }
+    .eco-feat { display: flex; align-items: flex-start; gap: 16px; }
+    .eco-icon-wrap { width: 42px; height: 42px; border-radius: 10px; background: var(--amber-subtle); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .eco-feat-name { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .eco-feat-desc { font-size: 13px; color: var(--text-muted); }
+    .eco-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .eco-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r); padding: 24px; transition: all 0.25s; }
+    .eco-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+    .eco-card-ico { font-size: 22px; margin-bottom: 10px; display: block; }
+    .eco-card-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+    .eco-card-desc { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+
+    /* ─── CONNECTORS ─── */
+    #connectors { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .conn-head { text-align: center; margin-bottom: 56px; }
+    .conn-head .sd { margin: 0 auto; text-align: center; }
+    .conn-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; background: var(--border); border-radius: var(--rl); overflow: hidden; }
+    .conn-card { background: var(--bg-card); padding: 28px 24px; transition: background 0.25s; display: flex; flex-direction: column; gap: 10px; }
+    .conn-card:hover { background: var(--bg-elevated); }
+    .conn-top { display: flex; align-items: center; justify-content: space-between; }
+    .conn-name { font-size: 15px; font-weight: 600; }
+    .conn-status { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-muted); font-family: var(--font-m); }
+    .csdot { width: 6px; height: 6px; border-radius: 50%; }
+    .csdot-g { background: var(--success); } .csdot-y { background: var(--warning); }
+    .conn-type { font-family: var(--font-m); font-size: 10px; color: var(--amber); letter-spacing: 0.08em; text-transform: uppercase; }
+    .conn-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.6; }
+    .conn-regions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+    .conn-region { font-size: 10px; padding: 2px 7px; border-radius: 4px; background: var(--bg-elevated); color: var(--text-muted); border: 1px solid var(--border); }
+
+    /* ─── CTA ─── */
+    #cta { position: relative; overflow: hidden; background: var(--bg-card); border-top: 1px solid var(--border); text-align: center; }
+    .cta-glow { position: absolute; inset: 0; background: radial-gradient(ellipse 65% 90% at 50% 50%, rgba(192,120,56,0.13) 0%, transparent 70%); pointer-events: none; }
+    .cta-inner { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; }
+    .cta-title { font-family: var(--font-d); font-size: clamp(38px,5vw,64px); line-height: 1.06; letter-spacing: -0.03em; margin-bottom: 22px; }
+    .cta-title em { font-style: italic; color: var(--amber); }
+    .cta-desc { font-size: 17px; color: var(--text-2); font-weight: 300; margin-bottom: 40px; }
+    .cta-form { display: flex; gap: 12px; max-width: 480px; margin: 0 auto; }
+    .cta-inp { flex: 1; padding: 14px 18px; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: var(--font-b); font-size: 15px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+    .cta-inp:focus { border-color: var(--amber); box-shadow: 0 0 0 3px var(--amber-glow); }
+    .cta-note { margin-top: 16px; font-size: 12px; color: var(--text-dim); }
+
+    /* ─── FOOTER ─── */
+    footer { background: var(--bg); border-top: 1px solid var(--border); padding: 64px 48px 40px; }
+    .footer-inner { max-width: var(--mw); margin: 0 auto; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); margin-bottom: 14px; }
+    .footer-tagline { font-size: 14px; color: var(--text-muted); line-height: 1.72; margin-bottom: 22px; }
+    .footer-socials { display: flex; gap: 10px; }
+    .soc-link { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 14px; text-decoration: none; transition: all 0.2s; }
+    .soc-link:hover { border-color: var(--border-strong); color: var(--amber); }
+    .footer-col-h { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 18px; }
+    .footer-col-links { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+    .footer-col-links a { text-decoration: none; color: var(--text-2); font-size: 14px; transition: color 0.2s; }
+    .footer-col-links a:hover { color: var(--amber); }
+    .footer-bottom { padding-top: 28px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .footer-copy { font-size: 13px; color: var(--text-dim); }
+    .footer-legal { display: flex; gap: 22px; }
+    .footer-legal a { font-size: 13px; color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+    .footer-legal a:hover { color: var(--text-muted); }
+
+    /* ─── REVEAL ─── */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    .rd1{transition-delay:0.08s} .rd2{transition-delay:0.18s} .rd3{transition-delay:0.28s} .rd4{transition-delay:0.38s} .rd5{transition-delay:0.48s}
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+      <path d="M5 25Q7 18 9 10Q10 6 13 4" stroke="#C07838" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+      <path d="M11 27Q13 20 14 12Q15 8 18 6" stroke="#C07838" stroke-width="2.4" stroke-linecap="round" fill="none" opacity="0.8"/>
+      <path d="M17 27Q19 21 20 14Q21 10 24 8" stroke="#C07838" stroke-width="2.4" stroke-linecap="round" fill="none" opacity="0.55"/>
+      <circle cx="5" cy="25" r="2.2" fill="#C07838"/>
+      <circle cx="11" cy="27" r="1.7" fill="#C07838" opacity="0.8"/>
+      <circle cx="17" cy="27" r="1.3" fill="#C07838" opacity="0.55"/>
+    </svg>
+    <span class="logo-text">Claw<b>Cross</b></span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#hands" data-i18n="nav.product"></a></li>
+    <li><a href="#pipeline" data-i18n="nav.pipeline"></a></li>
+    <li><a href="#skills" data-i18n="nav.skills"></a></li>
+    <li><a href="#connectors" data-i18n="nav.integrations"></a></li>
+    <li><a href="#ecosystem" data-i18n="nav.ecosystem"></a></li>
+    <li><a href="#" data-i18n="nav.docs"></a></li>
+  </ul>
+
+  <div class="nav-actions">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-zh" onclick="setLanguage('zh')">中文</button>
+      <div class="lang-sep"></div>
+      <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
+    </div>
+    <a href="#" class="btn btn-ghost" data-i18n="nav.signin"></a>
+    <a href="#cta" class="btn btn-amber" data-i18n="nav.cta"></a>
+  </div>
+</nav>
+
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        <span data-i18n="hero.badge"></span>
+      </div>
+      <h1 class="hero-h1" data-i18n-html="hero.title"></h1>
+      <p class="hero-desc" data-i18n="hero.desc"></p>
+      <div class="hero-actions">
+        <a href="#cta" class="btn btn-amber btn-lg" data-i18n="hero.cta1"></a>
+        <a href="#hands" class="btn btn-ghost btn-lg" data-i18n="hero.cta2"></a>
+      </div>
+      <div class="hero-proof">
+        <div class="proof-avatars">
+          <div class="proof-av">K</div>
+          <div class="proof-av">L</div>
+          <div class="proof-av">Z</div>
+          <div class="proof-av" style="background:var(--amber-subtle);color:var(--amber);border-color:var(--amber-border);">+</div>
+        </div>
+        <span class="proof-text" data-i18n-html="hero.proof"></span>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-badge-float hbf-1">
+        <div class="fbdot" style="background:#3E8A58;"></div>
+        <span data-i18n-html="hero.float1"></span>
+      </div>
+      <div class="hero-badge-float hbf-2">
+        <div class="fbdot" style="background:var(--amber);"></div>
+        <span data-i18n-html="hero.float2"></span>
+      </div>
+      <div class="hero-card">
+        <div class="card-titlebar">
+          <div class="wdots"><div class="wd wd-r"></div><div class="wd wd-y"></div><div class="wd wd-g"></div></div>
+          <div class="card-ttitle" data-i18n="hero.termTitle"></div>
+        </div>
+        <div class="chat-body" id="chatBody"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ MARQUEE ═══ -->
+<div class="marquee-wrap">
+  <div class="marquee-inner" id="marquee"></div>
+</div>
+
+
+<!-- ═══ STATS ═══ -->
+<div id="stats">
+  <div class="stats-grid">
+    <div class="stat"><div class="stat-val">30%+</div><div class="stat-lbl" data-i18n="stats.l1"></div></div>
+    <div class="stat"><div class="stat-val">16</div><div class="stat-lbl" data-i18n="stats.l2"></div></div>
+    <div class="stat"><div class="stat-val">100%</div><div class="stat-lbl" data-i18n="stats.l3"></div></div>
+    <div class="stat"><div class="stat-val">3×</div><div class="stat-lbl" data-i18n="stats.l4"></div></div>
+  </div>
+</div>
+
+
+<!-- ═══ THREE HANDS ═══ -->
+<section id="hands">
+  <div class="si">
+    <div class="hands-head reveal">
+      <div class="eyebrow eyebrow-c" data-i18n="hands.eyebrow"></div>
+      <h2 class="sh" data-i18n-html="hands.title"></h2>
+      <p class="sd" data-i18n="hands.desc"></p>
+    </div>
+    <div class="hands-grid">
+      <div class="hand reveal rd1">
+        <div class="hand-num">01</div>
+        <div class="hand-icon hi-1">⚡</div>
+        <div class="hand-sub" data-i18n="hands.h1.sub"></div>
+        <h3 class="hand-title" data-i18n="hands.h1.title"></h3>
+        <p class="hand-desc" data-i18n="hands.h1.desc"></p>
+        <ul class="hand-feats">
+          <li data-i18n="hands.h1.f1"></li>
+          <li data-i18n="hands.h1.f2"></li>
+          <li data-i18n="hands.h1.f3"></li>
+          <li data-i18n="hands.h1.f4"></li>
+        </ul>
+      </div>
+      <div class="hand reveal rd2">
+        <div class="hand-num">02</div>
+        <div class="hand-icon hi-2">🌐</div>
+        <div class="hand-sub" data-i18n="hands.h2.sub"></div>
+        <h3 class="hand-title">ClawCross in Chrome</h3>
+        <p class="hand-desc" data-i18n="hands.h2.desc"></p>
+        <ul class="hand-feats">
+          <li data-i18n="hands.h2.f1"></li>
+          <li data-i18n="hands.h2.f2"></li>
+          <li data-i18n="hands.h2.f3"></li>
+          <li data-i18n="hands.h2.f4"></li>
+        </ul>
+      </div>
+      <div class="hand reveal rd3">
+        <div class="hand-num">03</div>
+        <div class="hand-icon hi-3">🖥</div>
+        <div class="hand-sub" data-i18n="hands.h3.sub"></div>
+        <h3 class="hand-title">ClawCross in Computer</h3>
+        <p class="hand-desc" data-i18n="hands.h3.desc"></p>
+        <ul class="hand-feats">
+          <li data-i18n="hands.h3.f1"></li>
+          <li data-i18n="hands.h3.f2"></li>
+          <li data-i18n="hands.h3.f3"></li>
+          <li data-i18n="hands.h3.f4"></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ PIPELINE ═══ -->
+<section id="pipeline">
+  <div class="si">
+    <div class="pipe-header reveal">
+      <div class="eyebrow" data-i18n="pipeline.eyebrow"></div>
+      <h2 class="sh" data-i18n-html="pipeline.title"></h2>
+      <p class="sd" data-i18n="pipeline.desc"></p>
+    </div>
+    <div class="pipe-flow">
+      <div class="pstep reveal rd1">
+        <div class="pnode">🔍<span class="pstep-num">1</span></div>
+        <div class="pstep-eyebrow" data-i18n="pipeline.s1.e"></div>
+        <div class="pstep-name" data-i18n="pipeline.s1.n"></div>
+        <p class="pstep-desc" data-i18n="pipeline.s1.d"></p>
+        <div class="pgate" data-i18n="pipeline.s1.g"></div>
+      </div>
+      <div class="pstep reveal rd2">
+        <div class="pnode">🏭<span class="pstep-num">2</span></div>
+        <div class="pstep-eyebrow" data-i18n="pipeline.s2.e"></div>
+        <div class="pstep-name" data-i18n="pipeline.s2.n"></div>
+        <p class="pstep-desc" data-i18n="pipeline.s2.d"></p>
+        <div class="pgate" data-i18n="pipeline.s2.g"></div>
+      </div>
+      <div class="pstep reveal rd3">
+        <div class="pnode">✍️<span class="pstep-num">3</span></div>
+        <div class="pstep-eyebrow" data-i18n="pipeline.s3.e"></div>
+        <div class="pstep-name" data-i18n="pipeline.s3.n"></div>
+        <p class="pstep-desc" data-i18n="pipeline.s3.d"></p>
+        <div class="pgate" data-i18n="pipeline.s3.g"></div>
+      </div>
+      <div class="pstep reveal rd4">
+        <div class="pnode">🚀<span class="pstep-num">4</span></div>
+        <div class="pstep-eyebrow" data-i18n="pipeline.s4.e"></div>
+        <div class="pstep-name" data-i18n="pipeline.s4.n"></div>
+        <p class="pstep-desc" data-i18n="pipeline.s4.d"></p>
+        <div class="pgate" data-i18n="pipeline.s4.g"></div>
+      </div>
+      <div class="pstep reveal rd5">
+        <div class="pnode">📈<span class="pstep-num">5</span></div>
+        <div class="pstep-eyebrow" data-i18n="pipeline.s5.e"></div>
+        <div class="pstep-name" data-i18n="pipeline.s5.n"></div>
+        <p class="pstep-desc" data-i18n="pipeline.s5.d"></p>
+        <div class="pgate pgate-amber" data-i18n="pipeline.s5.g"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ SKILLS ═══ -->
+<section id="skills">
+  <div class="si">
+    <div class="skills-layout">
+      <div class="reveal">
+        <div class="eyebrow" data-i18n="skills.eyebrow"></div>
+        <h2 class="sh" data-i18n-html="skills.title"></h2>
+        <p class="sd" data-i18n="skills.desc"></p>
+        <div class="legend" id="skillLegend"></div>
+      </div>
+      <div class="skills-cloud reveal rd2" id="skillsCloud"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ MODES ═══ -->
+<section id="modes">
+  <div class="si">
+    <div class="modes-head reveal">
+      <div class="eyebrow eyebrow-c" data-i18n="modes.eyebrow"></div>
+      <h2 class="sh" data-i18n-html="modes.title"></h2>
+      <p class="sd" data-i18n="modes.desc"></p>
+    </div>
+    <div class="modes-grid">
+      <div class="mode-card reveal rd1">
+        <span class="mode-badge mb-nav" data-i18n="modes.m1.badge"></span>
+        <span class="mode-icon">🧭</span>
+        <div class="mode-user" data-i18n="modes.m1.user"></div>
+        <h3 class="mode-title" data-i18n="modes.m1.title"></h3>
+        <p class="mode-desc" data-i18n="modes.m1.desc"></p>
+        <ul class="mode-list" id="modeFeats1"></ul>
+      </div>
+      <div class="mode-card reveal rd2">
+        <span class="mode-badge mb-co" data-i18n="modes.m2.badge"></span>
+        <span class="mode-icon">🤝</span>
+        <div class="mode-user" data-i18n="modes.m2.user"></div>
+        <h3 class="mode-title" data-i18n="modes.m2.title"></h3>
+        <p class="mode-desc" data-i18n="modes.m2.desc"></p>
+        <ul class="mode-list" id="modeFeats2"></ul>
+      </div>
+      <div class="mode-card reveal rd3">
+        <span class="mode-badge mb-auto" data-i18n="modes.m3.badge"></span>
+        <span class="mode-icon">🚀</span>
+        <div class="mode-user" data-i18n="modes.m3.user"></div>
+        <h3 class="mode-title" data-i18n="modes.m3.title"></h3>
+        <p class="mode-desc" data-i18n="modes.m3.desc"></p>
+        <ul class="mode-list" id="modeFeats3"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ ECOSYSTEM ═══ -->
+<section id="ecosystem">
+  <div class="si">
+    <div class="eco-layout">
+      <div class="reveal">
+        <div class="eyebrow" data-i18n="eco.eyebrow"></div>
+        <h2 class="sh" data-i18n-html="eco.title"></h2>
+        <p class="sd" data-i18n="eco.desc"></p>
+        <div class="eco-features">
+          <div class="eco-feat"><div class="eco-icon-wrap">🛒</div><div><div class="eco-feat-name" data-i18n="eco.f1.name"></div><div class="eco-feat-desc" data-i18n="eco.f1.desc"></div></div></div>
+          <div class="eco-feat"><div class="eco-icon-wrap">👨‍💻</div><div><div class="eco-feat-name" data-i18n="eco.f2.name"></div><div class="eco-feat-desc" data-i18n="eco.f2.desc"></div></div></div>
+          <div class="eco-feat"><div class="eco-icon-wrap">🧩</div><div><div class="eco-feat-name" data-i18n="eco.f3.name"></div><div class="eco-feat-desc" data-i18n="eco.f3.desc"></div></div></div>
+        </div>
+      </div>
+      <div class="eco-cards reveal rd2" id="ecoCards"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ CONNECTORS ═══ -->
+<section id="connectors">
+  <div class="si">
+    <div class="conn-head reveal">
+      <div class="eyebrow eyebrow-c" data-i18n="conn.eyebrow"></div>
+      <h2 class="sh" data-i18n-html="conn.title"></h2>
+      <p class="sd" data-i18n="conn.desc"></p>
+    </div>
+    <div class="conn-grid" id="connGrid"></div>
+  </div>
+</section>
+
+
+<!-- ═══ CTA ═══ -->
+<section id="cta">
+  <div class="cta-glow"></div>
+  <div class="cta-inner reveal">
+    <div class="eyebrow eyebrow-c" style="margin-bottom:28px;" data-i18n="cta.eyebrow"></div>
+    <h2 class="cta-title" data-i18n-html="cta.title"></h2>
+    <p class="cta-desc" data-i18n="cta.desc"></p>
+    <div class="cta-form">
+      <input type="email" class="cta-inp" id="ctaInp" data-i18n-placeholder="cta.placeholder">
+      <button class="btn btn-amber btn-lg" id="ctaBtn" onclick="handleCta(event)" data-i18n="cta.btn"></button>
+    </div>
+    <p class="cta-note" data-i18n="cta.note"></p>
+  </div>
+</section>
+
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <a href="#" class="footer-brand-logo">
+          <svg width="28" height="28" viewBox="0 0 30 30" fill="none">
+            <path d="M5 25Q7 18 9 10Q10 6 13 4" stroke="#C07838" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+            <path d="M11 27Q13 20 14 12Q15 8 18 6" stroke="#C07838" stroke-width="2.4" stroke-linecap="round" fill="none" opacity="0.8"/>
+            <path d="M17 27Q19 21 20 14Q21 10 24 8" stroke="#C07838" stroke-width="2.4" stroke-linecap="round" fill="none" opacity="0.55"/>
+            <circle cx="5" cy="25" r="2.2" fill="#C07838"/>
+          </svg>
+          <span style="font-family:var(--font-d);font-size:18px;">Claw<b style="color:var(--amber);">Cross</b></span>
+        </a>
+        <p class="footer-tagline" data-i18n="footer.tagline"></p>
+        <div class="footer-socials">
+          <a href="#" class="soc-link">𝕏</a>
+          <a href="#" class="soc-link">in</a>
+          <a href="#" class="soc-link">✉</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-h" data-i18n="footer.col1"></div>
+        <ul class="footer-col-links" id="footerLinks1"></ul>
+      </div>
+      <div>
+        <div class="footer-col-h" data-i18n="footer.col2"></div>
+        <ul class="footer-col-links" id="footerLinks2"></ul>
+      </div>
+      <div>
+        <div class="footer-col-h" data-i18n="footer.col3"></div>
+        <ul class="footer-col-links" id="footerLinks3"></ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy" data-i18n="footer.copy"></div>
+      <div class="footer-legal" id="footerLegal"></div>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+/* ═══════════════════════════════════════
+   TRANSLATIONS
+═══════════════════════════════════════ */
+const T = {
+  zh: {
+    nav: {
+      product: '产品', pipeline: '流水线', skills: '技能',
+      integrations: '集成', ecosystem: '生态', docs: '文档',
+      signin: '登录', cta: '申请内测 →'
+    },
+    hero: {
+      badge: '内测开放中 · 2026年正式上线',
+      title: '每位卖家都值得拥有一位<br><em>世界级COO。</em>',
+      desc: 'ClawCross 是专为跨境电商卖家打造的AI原生智能工作台。三种智能触手延伸至所有平台——让AI COO伙伴全天候运营你的生意。',
+      cta1: '申请内测 →', cta2: '了解工作原理',
+      proof: '已有 <strong>500+ 卖家</strong> 加入内测等候名单',
+      float1: 'ACoS 本周下降 <strong style="color:var(--text);">24%</strong>',
+      float2: 'Listing 评分 <strong style="color:var(--text);">94/100</strong>',
+      termTitle: 'ClawCross · 项目：宠物智能饮水机 · 美国',
+    },
+    chat: [
+      { role:'ai', text:'早安。竞品「SmartPaw Pro」昨晚在亚马逊US降价18%。我已准备好三套应对方案。', tags:['data-analytics','market-research'], delay:800 },
+      { role:'user', text:'给我看保守方案。', delay:2600 },
+      { role:'ai', text:'保守方案：维持现价，PPC预算提高15%，定向打对方ASIN。预计ACoS保持22%以下。预计周收入影响：<strong>+$340</strong>。', tags:['advertising','pricing-strategy'], delay:4200 },
+    ],
+    stats: { l1:'平均营收提升', l2:'专属AI技能', l3:'平台覆盖率', l4:'智能触达模式' },
+    hands: {
+      eyebrow:'三种智能触手',
+      title:'触达<em>任何</em>平台，无所不能。',
+      desc:'ClawCross 为每次操作智能选路，自动选择最快、最可靠的通道，你无需关心底层实现。',
+      h1:{ sub:'高速公路', title:'CLI / MCP 直连',
+        desc:'通过标准化MCP协议直连平台API，结构化数据交互，是最高效的连接通道，批量操作轻松搞定。',
+        f1:'Amazon SP-API — 订单、广告、库存、FBA', f2:'Shopee、TikTok Shop、Lazada Open API',
+        f3:'通过MCP协议接入ERP系统', f4:'支持无限规模的批量操作' },
+      h2:{ sub:'万能钥匙',
+        desc:'AI驱动浏览器自动化，适用于任意网页。当平台没有API时，ClawCross读取DOM，像人类专家一样驱动浏览器操作。',
+        f1:'Temu、Coupang、1688全自动操作', f2:'竞品Listing抓取与价格监控',
+        f3:'以图搜源，智能发现供应商', f4:'任意网页后台批量操作' },
+      h3:{ sub:'超级手臂',
+        desc:'AI驱动桌面全能力操作，支持任意本地软件。从老旧ERP到Photoshop——能点的都能自动化。',
+        f1:'本地ERP自动化（马帮、通途等）', f2:'Excel表格处理与报表自动化',
+        f3:'Photoshop、Canva图片编辑', f4:'跨软件工作流与文件管理' },
+    },
+    pipeline: {
+      eyebrow:'五阶段产品流水线',
+      title:'从想法到<em>精益运营。</em>',
+      desc:'每个产品遵循标准化五阶段流水线，配备质量门控。不靠运气——达标才进入下一阶段。',
+      s1:{ e:'选品调研', n:'市场调研', d:'AI评估目标市场需求、竞争、物流与合规', g:'✓ 评分 ≥ 21/30' },
+      s2:{ e:'产品寻源', n:'供应商寻源', d:'1688自动化采集、供应商对比、谈判脚本与全链路到手成本', g:'✓ 毛利率 ≥ 30%' },
+      s3:{ e:'产品刊登', n:'Listing创建', d:'多语言AI Listing，含SEO优化、质量评分与A/B测试', g:'✓ 评分 ≥ 85/100' },
+      s4:{ e:'多平台发布', n:'多平台上架', d:'自动上架至亚马逊、Shopee、TikTok Shop等平台', g:'✓ 利润目标达成' },
+      s5:{ e:'运营优化', n:'AI运营', d:'广告、定价、库存与客服持续优化，每日工作清单', g:'∞ 持续运行' },
+    },
+    skills: {
+      eyebrow:'16项AI技能',
+      title:'每项你需要的能力，<em>全部内置。</em>',
+      desc:'每项技能都是一个深度知识模块，覆盖跨境电商一个细分领域。你的AI COO同时调用全部16项。',
+      legend:['选品调研阶段','产品寻源阶段','产品刊登阶段','发布与优化阶段','风控与合规'],
+      pills:[
+        {e:'🔭',n:'市场调研',p:'选品',c:'discover'},{e:'🎯',n:'产品选择',p:'选品',c:'discover'},
+        {e:'🏭',n:'供应商寻源',p:'寻源',c:'source'},{e:'💰',n:'定价策略',p:'寻源',c:'source'},
+        {e:'✍️',n:'产品刊登',p:'刊登',c:'launch'},{e:'📦',n:'库存管理',p:'刊登',c:'launch'},
+        {e:'🚚',n:'订单履约',p:'刊登',c:'launch'},{e:'📣',n:'广告投放',p:'优化',c:'publish'},
+        {e:'💬',n:'客户服务',p:'优化',c:'publish'},{e:'🏷',n:'品牌建设',p:'优化',c:'publish'},
+        {e:'📊',n:'数据分析',p:'优化',c:'optimize'},{e:'💹',n:'财务管理',p:'优化',c:'optimize'},
+        {e:'🛡',n:'平台合规',p:'风控',c:'protect'},{e:'⚠️',n:'风险管理',p:'风控',c:'protect'},
+        {e:'🎄',n:'季节规划',p:'风控',c:'protect'},{e:'🌐',n:'多平台拓展',p:'发布',c:'publish'},
+      ],
+    },
+    modes: {
+      eyebrow:'自适应智能',
+      title:'随<em>你的业务</em>一起成长。',
+      desc:'ClawCross 根据你的经验和信任度自动调整。从引导式辅助开始，按自己节奏升级至完全自动化。',
+      m1:{ badge:'导航模式', user:'适合：新手卖家', title:'全程引导',
+        desc:'AI主动引导每一步决策。每个操作都有解释、确认和记录。自信开启你的跨境事业。',
+        feats:['逐步AI引导','每次操作前确认','通俗易懂的解释','自然语言操作一切'] },
+      m2:{ badge:'副驾模式', user:'适合：经验卖家', title:'并肩作战',
+        desc:'AI在你旁边工作，在问题变成麻烦前主动发现异常。你来拍板，AI负责监控与基础工作。',
+        feats:['每日主动简报','异常检测与预警','中等风险操作需确认','实时策略建议'] },
+      m3:{ badge:'自驾模式', user:'适合：大卖家与团队', title:'全速自动驾驶',
+        desc:'AI自主执行每日数百次操作。设定你的规则，定义你的边界，仅在重大战略决策时介入。',
+        feats:['全自动日常运营','自定义规则引擎','超过$500的变动才需确认','完整审计日志与报表'] },
+    },
+    eco: {
+      eyebrow:'OpenClaw Cloud',
+      title:'持续进化的<em>智能生态。</em>',
+      desc:'ClawCross 不只是工具——它是平台。在跨境电商行业中构建、发布并变现你自己的Agent。',
+      f1:{ name:'Agent市场', desc:'50+ Agent覆盖所有电商场景。一键安装，发布并获得70%营收分成。' },
+      f2:{ name:'开发者平台', desc:'完整SDK、安全沙箱、MCP工具，开发者获70%营收分成，一次开发服务数千卖家。' },
+      f3:{ name:'垂直技能包', desc:'3C数码、服装、家居、美妆等品类专属Skill包，深度集成平台专业知识。' },
+      cards:[
+        {e:'🚀',t:'从0到1上架',d:'市场调研到首单，一条龙引导工作流'},
+        {e:'⚡',t:'快速跟卖',d:'竞品分析到差异化Listing，24小时内搞定'},
+        {e:'🔧',t:'Listing优化',d:'诊断低效Listing，自动A/B测试改进'},
+        {e:'🎯',t:'大促作战计划',d:'黑五/Prime Day/双十一，90天备战工作流'},
+        {e:'🌐',t:'新平台拓展',d:'评估、适配Listing、端到端上架新市场'},
+        {e:'🔄',t:'日常运营自动驾驶',d:'自动日报、异常处理与自动调整'},
+      ],
+    },
+    conn: {
+      eyebrow:'原生集成',
+      title:'连接你销售的<em>每一个平台。</em>',
+      desc:'开箱即用10+原生连接器。平台有API就直连，没有API就靠ClawCross in Chrome搞定。',
+      status:{ active:'已连接', beta:'测试中', coming:'即将上线' },
+      cards:[
+        {n:'Amazon',    s:'active', t:'SP-API · Ads API', d:'订单、广告、库存、FBA、品牌分析', r:['US','JP','DE','UK']},
+        {n:'Shopee',    s:'active', t:'Open API',          d:'商品、订单、聊天、物流与营销活动', r:['MY','SG','TH','PH']},
+        {n:'TikTok Shop',s:'active',t:'Open API',          d:'商品、订单、达人合作与短视频广告', r:['US','UK','ID']},
+        {n:'1688',      s:'active', t:'API + Browser Use', d:'供应商搜索、商品详情、以图搜源',   r:['中国']},
+        {n:'Temu',      s:'beta',   t:'Browser Use',       d:'全平台自动化——商品、活动、订单',   r:['US','EU']},
+        {n:'Lazada',    s:'beta',   t:'Open API',          d:'商品、订单、物流与营销自动化',       r:['东南亚']},
+        {n:'马帮ERP',   s:'active', t:'MCP + Computer Use',d:'订单、库存、采购与财务同步',         r:['全平台']},
+        {n:'Shopify',   s:'coming', t:'REST + GraphQL',    d:'独立站商品、订单、主题与数据分析',   r:['全球']},
+      ],
+    },
+    cta: {
+      eyebrow:'内测申请',
+      title:'今天就拥有你的<br><em>AI COO。</em>',
+      desc:'已有数百名跨境卖家在等候名单中。内测用户享有优先入驻资格和创始用户定价。',
+      placeholder:'你的邮箱地址', btn:'申请内测 →',
+      note:'无垃圾邮件，无需信用卡，随时取消。',
+      success:'✓ 已加入等候名单！',
+    },
+    footer: {
+      tagline:'专为跨境电商打造的AI原生智能工作台。你的AI COO合伙人，永不休眠，永不错过信号，时刻致力于你的业绩增长。',
+      col1:'产品', col2:'支持平台', col3:'关于我们',
+      links1:['功能特性','三种触手','16项AI技能','OpenClaw Cloud','定价','更新日志'],
+      links2:['Amazon','Shopee','TikTok Shop','Temu','1688','查看全部平台 →'],
+      links3:['关于我们','博客','文档中心','开发者平台','加入我们','联系我们'],
+      copy:'© 2026 ClawCross. 保留所有权利。',
+      legal:['隐私政策','服务条款','Cookie政策'],
+    },
+  },
+
+  en: {
+    nav: {
+      product:'Product', pipeline:'Pipeline', skills:'Skills',
+      integrations:'Integrations', ecosystem:'Ecosystem', docs:'Docs',
+      signin:'Sign In', cta:'Get Early Access →'
+    },
+    hero: {
+      badge:'Early Access · Launching 2026',
+      title:'Every seller deserves a<br><em>world-class COO.</em>',
+      desc:'ClawCross is the AI-native intelligent workbench for cross-border e-commerce. Three intelligent hands reach any platform—while your AI COO partner runs the entire operation, around the clock.',
+      cta1:'Get Early Access →', cta2:'See How It Works',
+      proof:'Join <strong>500+ sellers</strong> on the early access waitlist',
+      float1:'ACoS reduced <strong style="color:var(--text);">24%</strong> this week',
+      float2:'Listing scored <strong style="color:var(--text);">94/100</strong>',
+      termTitle:'ClawCross · Project: Pet Water Fountain · US',
+    },
+    chat: [
+      { role:'ai', text:'Good morning. Competitor "SmartPaw Pro" dropped prices 18% overnight on Amazon US. I\'ve prepared three response scenarios.', tags:['data-analytics','market-research'], delay:800 },
+      { role:'user', text:'Show me the conservative option.', delay:2600 },
+      { role:'ai', text:'Conservative: Hold price, boost PPC by 15% targeting their ASIN. Projected ACoS stays under 22%. Estimated weekly revenue impact: <strong>+$340</strong>.', tags:['advertising','pricing-strategy'], delay:4200 },
+    ],
+    stats: { l1:'Avg Revenue Improvement', l2:'Specialized AI Skills', l3:'Platform Coverage', l4:'Intelligent Reach Modes' },
+    hands: {
+      eyebrow:'Three Intelligent Hands',
+      title:'Reach <em>any</em> platform, without limits.',
+      desc:'ClawCross intelligently routes every operation through the fastest, most reliable channel. You never choose—the AI does.',
+      h1:{ sub:'The Highway', title:'CLI / MCP Direct',
+        desc:'Lightning-fast structured API connections to platforms. The most precise path for automation, bulk sync, and real-time data.',
+        f1:'Amazon SP-API — orders, ads, inventory, FBA', f2:'Shopee, TikTok Shop, Lazada Open APIs',
+        f3:'ERP integrations via MCP protocol', f4:'Batch operations at unlimited scale' },
+      h2:{ sub:'The Master Key',
+        desc:'AI-powered browser automation that works on any website. When a platform lacks an API, ClawCross reads the DOM and drives the browser like a human expert.',
+        f1:'Full automation on Temu, Coupang, 1688', f2:'Competitor listing scraping & price tracking',
+        f3:'Supplier discovery via reverse image search', f4:'Bulk backend operations on any web portal' },
+      h3:{ sub:'The Super Arm',
+        desc:'AI-driven desktop control that operates any software. From legacy ERPs to Photoshop—if you can click it, ClawCross automates it.',
+        f1:'Local ERP automation (Mabang, Tongtong)', f2:'Excel & spreadsheet reporting workflows',
+        f3:'Image editing via Photoshop or Canva', f4:'Cross-app pipelines & file management' },
+    },
+    pipeline: {
+      eyebrow:'5-Stage Product Pipeline',
+      title:'From idea to <em>optimized operation.</em>',
+      desc:'Every product follows a disciplined five-stage pipeline with quality gates. No guesswork—only advance when you\'re truly ready.',
+      s1:{ e:'Discover', n:'Market Research', d:'AI evaluates demand, competition, logistics & compliance across target markets', g:'✓ Score ≥ 21/30' },
+      s2:{ e:'Source', n:'Supplier Sourcing', d:'Automated 1688 scraping, supplier comparison, negotiation scripts & full landed cost', g:'✓ Margin ≥ 30%' },
+      s3:{ e:'Launch', n:'Listing Creation', d:'Multi-language AI listings with SEO optimization, quality scoring & A/B testing ready', g:'✓ Score ≥ 85/100' },
+      s4:{ e:'Publish', n:'Multi-Platform', d:'Auto-publish to Amazon, Shopee, TikTok Shop, Temu and more with platform-specific pricing', g:'✓ Profit target met' },
+      s5:{ e:'Optimize', n:'AI Operations', d:'Continuous ads, pricing, inventory & customer service optimization with daily briefings', g:'∞ Always running' },
+    },
+    skills: {
+      eyebrow:'16 AI Skills',
+      title:'Every skill you need, <em>built in.</em>',
+      desc:'Each Skill is a deep knowledge module covering one domain of cross-border commerce. Your AI COO draws on all 16 simultaneously.',
+      legend:['Discover phase','Source phase','Launch phase','Publish & Optimize','Risk & Compliance'],
+      pills:[
+        {e:'🔭',n:'Market Research',p:'Discover',c:'discover'},{e:'🎯',n:'Product Selection',p:'Discover',c:'discover'},
+        {e:'🏭',n:'Supplier Sourcing',p:'Source',c:'source'},{e:'💰',n:'Pricing Strategy',p:'Source',c:'source'},
+        {e:'✍️',n:'Product Listing',p:'Launch',c:'launch'},{e:'📦',n:'Inventory Mgmt',p:'Launch',c:'launch'},
+        {e:'🚚',n:'Order Fulfillment',p:'Launch',c:'launch'},{e:'📣',n:'Advertising',p:'Optimize',c:'publish'},
+        {e:'💬',n:'Customer Service',p:'Optimize',c:'publish'},{e:'🏷',n:'Brand Building',p:'Optimize',c:'publish'},
+        {e:'📊',n:'Data Analytics',p:'Optimize',c:'optimize'},{e:'💹',n:'Financial Mgmt',p:'Optimize',c:'optimize'},
+        {e:'🛡',n:'Platform Compliance',p:'Protect',c:'protect'},{e:'⚠️',n:'Risk Management',p:'Protect',c:'protect'},
+        {e:'🎄',n:'Seasonal Planning',p:'Protect',c:'protect'},{e:'🌐',n:'Multi-Platform',p:'Publish',c:'publish'},
+      ],
+    },
+    modes: {
+      eyebrow:'Adaptive Intelligence',
+      title:'Grows with <em>your business.</em>',
+      desc:'ClawCross adapts to your experience and trust level. Start with guided assistance, evolve to full autonomy on your own timeline.',
+      m1:{ badge:'Navigation Mode', user:'For: New Sellers', title:'Guided Every Step',
+        desc:'AI actively leads you through each decision. Every action is explained, confirmed, and tracked. Build your first international business with confidence.',
+        feats:['Step-by-step AI guidance','Confirm before every action','Plain-language explanations','Natural language for everything'] },
+      m2:{ badge:'Copilot Mode', user:'For: Experienced Sellers', title:'Side by Side',
+        desc:'AI works alongside you, surfacing insights and anomalies before they become problems. You make the calls, AI handles monitoring and groundwork.',
+        feats:['Proactive daily briefings','Anomaly detection & alerts','Confirm medium-risk actions','Real-time strategy recommendations'] },
+      m3:{ badge:'Autopilot Mode', user:'For: Large Sellers & Teams', title:'Run on Autopilot',
+        desc:'AI autonomously executes hundreds of daily operations. Set your thresholds, define your rules, and only intervene for high-stakes decisions.',
+        feats:['Fully autonomous daily operations','Custom rule engine & conditions','Only confirm changes > $500','Full audit trail & reporting'] },
+    },
+    eco: {
+      eyebrow:'OpenClaw Cloud',
+      title:'A living <em>ecosystem</em> of intelligence.',
+      desc:'ClawCross is more than a tool—it\'s a platform. Build, publish, and monetize custom Agents for the cross-border commerce industry.',
+      f1:{ name:'Agent Marketplace', desc:'50+ Agents covering every e-commerce scenario. Install with one click. Publish your own and earn 70% revenue.' },
+      f2:{ name:'Developer Platform', desc:'Full SDK, secure sandbox, MCP tools, and 70% revenue share. Build once, sell to thousands of sellers.' },
+      f3:{ name:'Vertical Skill Packs', desc:'Category-specific packs for electronics, fashion, home goods, and beauty—with deep platform knowledge built in.' },
+      cards:[
+        {e:'🚀',t:'Zero to Launch',d:'Market research through first sale in a single guided workflow'},
+        {e:'⚡',t:'Fast Follow',d:'Competitor analysis to differentiated listing in under 24 hours'},
+        {e:'🔧',t:'Listing Optimizer',d:'Diagnose underperformers and automatically run A/B improvements'},
+        {e:'🎯',t:'Peak Season Battle Plan',d:'90-day Black Friday / Prime Day / 11.11 preparation workflow'},
+        {e:'🌐',t:'Platform Expansion',d:'Evaluate, adapt listings, and launch into new markets end-to-end'},
+        {e:'🔄',t:'Daily Ops Autopilot',d:'Automated daily reports, anomaly handling, and self-adjustment'},
+      ],
+    },
+    conn: {
+      eyebrow:'Native Integrations',
+      title:'Connected to every platform <em>you sell on.</em>',
+      desc:'10+ native connectors out of the box. If a platform has an API, ClawCross uses it. If not, ClawCross in Chrome handles it.',
+      status:{ active:'Active', beta:'Beta', coming:'Coming Soon' },
+      cards:[
+        {n:'Amazon',    s:'active', t:'SP-API · Ads API', d:'Orders, advertising, inventory, FBA, Brand Analytics', r:['US','JP','DE','UK']},
+        {n:'Shopee',    s:'active', t:'Open API',          d:'Products, orders, chat, logistics & marketing campaigns', r:['MY','SG','TH','PH']},
+        {n:'TikTok Shop',s:'active',t:'Open API',          d:'Products, orders, creator campaigns & short video ads', r:['US','UK','ID']},
+        {n:'1688',      s:'active', t:'API + Browser Use', d:'Supplier search, product detail, reverse image sourcing', r:['China']},
+        {n:'Temu',      s:'beta',   t:'Browser Use',       d:'Full portal automation — listings, promotions, orders', r:['US','EU']},
+        {n:'Lazada',    s:'beta',   t:'Open API',          d:'Products, orders, logistics & marketing automation', r:['SEA']},
+        {n:'Mabang ERP',s:'active', t:'MCP + Computer Use',d:'Orders, inventory, procurement & financial sync', r:['All']},
+        {n:'Shopify',   s:'coming', t:'REST + GraphQL',    d:'Independent store products, orders, themes & analytics', r:['Global']},
+      ],
+    },
+    cta: {
+      eyebrow:'Early Access',
+      title:'Start with your<br><em>AI COO</em> today.',
+      desc:'Join hundreds of cross-border sellers on the waitlist. Early access members get priority onboarding and founding-tier pricing.',
+      placeholder:'your@email.com', btn:'Request Access →',
+      note:'No spam. No credit card. Cancel anytime.',
+      success:'✓ You\'re on the list!',
+    },
+    footer: {
+      tagline:'The AI-native intelligent workbench for cross-border e-commerce. Your AI COO partner that never sleeps, never misses a signal, and always works toward your growth.',
+      col1:'Product', col2:'Platforms', col3:'Company',
+      links1:['Features','Three Hands','16 AI Skills','OpenClaw Cloud','Pricing','Changelog'],
+      links2:['Amazon','Shopee','TikTok Shop','Temu','1688','All Platforms →'],
+      links3:['About','Blog','Documentation','Developer Portal','Careers','Contact'],
+      copy:'© 2026 ClawCross. All rights reserved.',
+      legal:['Privacy Policy','Terms of Service','Cookie Policy'],
+    },
+  }
+};
+
+/* ═══════════════════════════════════════
+   I18N ENGINE
+═══════════════════════════════════════ */
+let LANG = 'zh';
+let chatAnimRunning = false;
+let chatTimeouts = [];
+
+function t(key) {
+  const parts = key.split('.');
+  let obj = T[LANG];
+  for (const p of parts) {
+    if (obj === undefined || obj === null) return key;
+    obj = obj[p];
+  }
+  return obj ?? key;
+}
+
+function applyTranslations() {
+  // Static data-i18n (textContent)
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const val = t(el.getAttribute('data-i18n'));
+    if (typeof val === 'string') el.textContent = val;
+  });
+  // data-i18n-html (innerHTML)
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const val = t(el.getAttribute('data-i18n-html'));
+    if (typeof val === 'string') el.innerHTML = val;
+  });
+  // data-i18n-placeholder
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const val = t(el.getAttribute('data-i18n-placeholder'));
+    if (typeof val === 'string') el.placeholder = val;
+  });
+
+  // Dynamic sections
+  renderSkillLegend();
+  renderSkillsCloud();
+  renderModeFeatures();
+  renderEcoCards();
+  renderConnectors();
+  renderFooterLinks();
+}
+
+function setLanguage(lang) {
+  LANG = lang;
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  // Update page title & meta
+  document.title = lang === 'zh'
+    ? 'ClawCross — 跨境电商AI智能工作台'
+    : 'ClawCross — AI COO for Cross-Border E-Commerce';
+  applyTranslations();
+  // Restart chat
+  chatTimeouts.forEach(clearTimeout);
+  chatTimeouts = [];
+  document.getElementById('chatBody').innerHTML = '';
+  chatTimeouts.push(setTimeout(animateChat, 400));
+}
+
+/* ═══ DYNAMIC RENDERS ═══ */
+function renderSkillLegend() {
+  const leg = document.getElementById('skillLegend');
+  const colors = ['var(--amber)','var(--warning)','var(--db)','var(--sp)','var(--error)'];
+  leg.innerHTML = t('skills.legend').map((l, i) =>
+    `<div class="leg-item"><span class="leg-dot" style="background:${colors[i]}"></span>${l}</div>`
+  ).join('');
+}
+
+function renderSkillsCloud() {
+  const cloud = document.getElementById('skillsCloud');
+  cloud.innerHTML = t('skills.pills').map(p =>
+    `<div class="skill-pill sp-${p.c}">
+       <span class="skill-emoji">${p.e}</span>
+       <span><span class="skill-info-name">${p.n}</span><span class="skill-info-phase">${p.p}</span></span>
+     </div>`
+  ).join('');
+}
+
+function renderModeFeatures() {
+  [1,2,3].forEach(i => {
+    const ul = document.getElementById(`modeFeats${i}`);
+    if (!ul) return;
+    ul.innerHTML = t(`modes.m${i}.feats`).map(f =>
+      `<li><span class="chk">✓</span>${f}</li>`
+    ).join('');
+  });
+}
+
+function renderEcoCards() {
+  const grid = document.getElementById('ecoCards');
+  grid.innerHTML = t('eco.cards').map(c =>
+    `<div class="eco-card">
+       <span class="eco-card-ico">${c.e}</span>
+       <div class="eco-card-title">${c.t}</div>
+       <div class="eco-card-desc">${c.d}</div>
+     </div>`
+  ).join('');
+}
+
+function renderConnectors() {
+  const grid = document.getElementById('connGrid');
+  const statusData = t('conn.status');
+  grid.innerHTML = t('conn.cards').map(c => {
+    const dotClass = c.s === 'active' ? 'csdot-g' : 'csdot-y';
+    const statusText = statusData[c.s] || c.s;
+    const regions = c.r.map(r => `<span class="conn-region">${r}</span>`).join('');
+    return `<div class="conn-card">
+      <div class="conn-top">
+        <div class="conn-name">${c.n}</div>
+        <div class="conn-status"><span class="csdot ${dotClass}"></span>${statusText}</div>
+      </div>
+      <div class="conn-type">${c.t}</div>
+      <div class="conn-desc">${c.d}</div>
+      <div class="conn-regions">${regions}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderFooterLinks() {
+  [1,2,3].forEach(i => {
+    const ul = document.getElementById(`footerLinks${i}`);
+    if (!ul) return;
+    ul.innerHTML = t(`footer.links${i}`).map(l =>
+      `<li><a href="#">${l}</a></li>`
+    ).join('');
+  });
+  const legal = document.getElementById('footerLegal');
+  legal.innerHTML = t('footer.legal').map(l =>
+    `<a href="#">${l}</a>`
+  ).join('');
+}
+
+/* ═══ MARQUEE ═══ */
+const platforms = [
+  {e:'📦',n:'Amazon'},{e:'🛍',n:'Shopee'},{e:'🎵',n:'TikTok Shop'},
+  {e:'🟠',n:'Temu'},{e:'🏭',n:'1688'},{e:'🛒',n:'Lazada'},
+  {e:'🏬',n:'Shopify'},{e:'🇰🇷',n:'Coupang'},{e:'📋',n:'Mabang ERP'},
+  {e:'📊',n:'Google Sheets'},{e:'💹',n:'TikTok Ads'},
+];
+const mq = document.getElementById('marquee');
+mq.innerHTML = [...platforms,...platforms].map(p =>
+  `<div class="marquee-item"><span>${p.e}</span>${p.n}</div>`
+).join('');
+
+/* ═══ CHAT ANIMATION ═══ */
+function addMsg(msg) {
+  const body = document.getElementById('chatBody');
+  const div = document.createElement('div');
+  div.className = 'cmsg';
+  if (msg.role === 'ai') {
+    div.innerHTML = `
+      <div class="cav cav-ai">✦</div>
+      <div class="cbubble">
+        <div class="cname cname-ai">ClawCross AI</div>
+        <div class="ctext">${msg.text}</div>
+        ${msg.tags ? `<div class="ctags">${msg.tags.map(tg=>`<span class="ctag">⚡ ${tg}</span>`).join('')}</div>` : ''}
+      </div>`;
+  } else {
+    div.innerHTML = `
+      <div class="cav cav-u">You</div>
+      <div class="cbubble">
+        <div class="cname cname-u">${LANG==='zh'?'你':'You'}</div>
+        <div class="ctext ctext-u">${msg.text}</div>
+      </div>`;
+  }
+  body.appendChild(div);
+  requestAnimationFrame(() => requestAnimationFrame(() => div.classList.add('show')));
+}
+
+function showTyping() {
+  const body = document.getElementById('chatBody');
+  const t = document.createElement('div');
+  t.className = 'typing';
+  t.innerHTML = '<div class="td"></div><div class="td"></div><div class="td"></div>';
+  body.appendChild(t);
+  requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('show')));
+  return t;
+}
+
+function animateChat() {
+  const msgs = T[LANG].chat;
+  let typingEl = null;
+  msgs.forEach((msg, i) => {
+    if (msg.role === 'ai' && i > 0) {
+      const tid = setTimeout(() => { typingEl = showTyping(); }, msg.delay - 700);
+      chatTimeouts.push(tid);
+    }
+    const tid = setTimeout(() => {
+      if (typingEl) { typingEl.remove(); typingEl = null; }
+      addMsg(msg);
+    }, msg.delay);
+    chatTimeouts.push(tid);
+  });
+}
+
+/* ═══ CTA ═══ */
+function handleCta(e) {
+  const btn = e.currentTarget;
+  const inp = document.getElementById('ctaInp');
+  const email = inp.value.trim();
+  if (!email || !email.includes('@')) {
+    inp.style.borderColor = 'var(--error)';
+    inp.style.boxShadow = '0 0 0 3px rgba(184,60,47,0.2)';
+    setTimeout(() => { inp.style.borderColor = ''; inp.style.boxShadow = ''; }, 1800);
+    return;
+  }
+  btn.textContent = t('cta.success');
+  btn.style.background = 'var(--success)';
+  btn.style.boxShadow = '0 0 20px rgba(62,138,88,0.3)';
+  inp.value = ''; inp.disabled = true; btn.disabled = true;
+}
+
+/* ═══ SCROLL REVEAL ═══ */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ═══ NAV OPACITY ═══ */
+const navEl = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  navEl.style.background = window.scrollY > 60 ? 'rgba(11,9,6,0.92)' : 'rgba(11,9,6,0.72)';
+}, { passive: true });
+
+/* ═══ INIT ═══ */
+window.addEventListener('load', () => {
+  applyTranslations();
+  setTimeout(animateChat, 600);
+});
+</script>
+</body>
+</html>
