@@ -39,18 +39,12 @@
     "h1": {
       "sub": "高速公路", "title": "CLI / MCP 直连",
       "desc": "通过标准化MCP协议直连平台API，结构化数据交互，是最高效的连接通道，批量操作轻松搞定。",
-      "f1": "Amazon SP-API — 订单、广告、库存、FBA",
-      "f2": "Shopee、TikTok Shop、Lazada Open API",
-      "f3": "通过MCP协议接入ERP系统",
-      "f4": "支持无限规模的批量操作"
+      "feats": ["Amazon SP-API — 订单、广告、库存、FBA", "Shopee、TikTok Shop、Lazada Open API", "通过MCP协议接入ERP系统", "支持无限规模的批量操作"]
     },
     "h2": {
       "sub": "万能钥匙", "title": "ClawCross in Chrome",
       "desc": "AI驱动浏览器自动化，适用于任意网页。当平台没有API时，ClawCross读取DOM，像人类专家一样驱动浏览器操作。",
-      "f1": "Temu、Coupang、1688全自动操作",
-      "f2": "竞品Listing抓取与价格监控",
-      "f3": "以图搜源，智能发现供应商",
-      "f4": "任意网页后台批量操作"
+      "feats": ["Temu、Coupang、1688全自动操作", "竞品Listing抓取与价格监控", "以图搜源，智能发现供应商", "任意网页后台批量操作"]
     },
     "h3": {
       "sub": "超级手臂", "title": "Computer Use",
@@ -58,7 +52,7 @@
       "f1": "本地ERP自动化（马帮、通途等）",
       "f2": "Excel表格处理与报表自动化",
       "f3": "Photoshop、Canva图片编辑",
-      "f4": "跨软件工作流与文件管理"
+      "feats": ["本地ERP自动化（马帮、通途等）", "Excel表格处理与报表自动化", "Photoshop、Canva图片编辑", "跨软件工作流与文件管理"]
     }
   },
   "pipeline": {

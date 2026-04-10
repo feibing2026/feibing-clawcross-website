@@ -39,26 +39,17 @@
     "h1": {
       "sub": "The Highway", "title": "CLI / MCP Direct",
       "desc": "Lightning-fast structured API connections to platforms. The most precise path for automation, bulk sync, and real-time data.",
-      "f1": "Amazon SP-API — orders, ads, inventory, FBA",
-      "f2": "Shopee, TikTok Shop, Lazada Open APIs",
-      "f3": "ERP integrations via MCP protocol",
-      "f4": "Batch operations at unlimited scale"
+      "feats": ["Amazon SP-API — orders, ads, inventory, FBA", "Shopee, TikTok Shop, Lazada Open APIs", "ERP integrations via MCP protocol", "Batch operations at unlimited scale"]
     },
     "h2": {
       "sub": "The Master Key", "title": "ClawCross in Chrome",
       "desc": "AI-powered browser automation that works on any website. When a platform lacks an API, ClawCross reads the DOM and drives the browser like a human expert.",
-      "f1": "Full automation on Temu, Coupang, 1688",
-      "f2": "Competitor listing scraping & price tracking",
-      "f3": "Supplier discovery via reverse image search",
-      "f4": "Bulk backend operations on any web portal"
+      "feats": ["Full automation on Temu, Coupang, 1688", "Competitor listing scraping & price tracking", "Supplier discovery via reverse image search", "Bulk backend operations on any web portal"]
     },
     "h3": {
       "sub": "The Super Arm", "title": "Computer Use",
       "desc": "AI-driven desktop control that operates any software. From legacy ERPs to Photoshop—if you can click it, ClawCross automates it.",
-      "f1": "Local ERP automation (Mabang, Tongtong)",
-      "f2": "Excel & spreadsheet reporting workflows",
-      "f3": "Image editing via Photoshop or Canva",
-      "f4": "Cross-app pipelines & file management"
+      "feats": ["Local ERP automation (Mabang, Tongtong)", "Excel & spreadsheet reporting workflows", "Image editing via Photoshop or Canva", "Cross-app pipelines & file management"]
     }
   },
   "pipeline": {

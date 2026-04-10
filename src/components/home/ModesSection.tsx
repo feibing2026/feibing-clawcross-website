@@ -13,7 +13,7 @@ export function ModesSection() {
   }))
 
   return (
-    <section className="py-24 bg-bg-card/30">
+    <section id="modes" className="py-24 bg-bg-card/30">
       <div className="max-w-site mx-auto px-8 md:px-12">
         <Reveal className="text-center mb-16">
           <div className="text-xs font-mono text-amber uppercase tracking-widest mb-3">{t('eyebrow')}</div>

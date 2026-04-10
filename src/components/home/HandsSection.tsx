@@ -10,15 +10,10 @@ export function HandsSection() {
   const hands = (['h1', 'h2', 'h3'] as const).map((k, i) => ({
     icon: HAND_ICONS[i],
     color: HAND_COLORS[i],
-    sub: t(`${k}.sub` as `h1.sub` | `h2.sub` | `h3.sub`),
+    sub:   t(`${k}.sub`   as `h1.sub`   | `h2.sub`   | `h3.sub`),
     title: t(`${k}.title` as `h1.title` | `h2.title` | `h3.title`),
-    desc: t(`${k}.desc` as `h1.desc` | `h2.desc` | `h3.desc`),
-    feats: [
-      t(`${k}.f1` as `h1.f1` | `h2.f1` | `h3.f1`),
-      t(`${k}.f2` as `h1.f2` | `h2.f2` | `h3.f2`),
-      t(`${k}.f3` as `h1.f3` | `h2.f3` | `h3.f3`),
-      t(`${k}.f4` as `h1.f4` | `h2.f4` | `h3.f4`),
-    ],
+    desc:  t(`${k}.desc`  as `h1.desc`  | `h2.desc`  | `h3.desc`),
+    feats: t.raw(`${k}.feats` as `h1.feats` | `h2.feats` | `h3.feats`) as string[],
   }))
 
   return (

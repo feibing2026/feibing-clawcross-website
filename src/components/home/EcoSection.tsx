@@ -39,9 +39,9 @@ export function EcoSection() {
           {/* Right: agent cards */}
           <Reveal delay={150}>
             <div className="grid grid-cols-2 gap-3">
-              {cards.map((card) => (
+              {cards.map((card, i) => (
                 <div
-                  key={card.t}
+                  key={i}
                   className="rounded-[16px] border border-border bg-bg-card p-4 hover:border-amber/30 transition-colors"
                 >
                   <div className="text-2xl mb-2">{card.e}</div>
