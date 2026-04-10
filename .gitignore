@@ -12,6 +12,10 @@
 # macOS
 .DS_Store
 
+# Git worktrees
+.worktrees/
+
 # Node (if added later)
 node_modules/
 dist/
+.next/
