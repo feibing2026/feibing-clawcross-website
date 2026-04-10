@@ -1,0 +1,17 @@
+# IDE
+.project
+.classpath
+.settings/
+.idea/
+*.iml
+.vscode/
+
+# Claude Code (local only)
+.claude/
+
+# macOS
+.DS_Store
+
+# Node (if added later)
+node_modules/
+dist/
