@@ -2,11 +2,17 @@
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-**Goal:** Migrate ClawCross from a single `index.html` to a production-grade Next.js 15 App Router site deployable to Vercel.
+**Goal:** Migrate ClawCross from a single `index.html` to a production-grade Next.js App Router site deployable to both Vercel and GitHub Pages.
 
-**Architecture:** App Router with `[locale]` dynamic segment powered by next-intl. Each landing-page section becomes an isolated Server Component. Only interactive pieces (`ChatDemo`, locale switcher) are Client Components. Blog and docs use MDX files under `content/`.
+**Architecture:** App Router with `[locale]` dynamic segment powered by next-intl. `output: 'export'` enables pure static generation compatible with GitHub Pages. `localePrefix: 'always'` ensures every URL contains `/zh` or `/en` (required when middleware cannot run on static hosts). Each landing-page section is a Server Component (rendered at build time). Only interactive pieces (`ChatDemo`, locale switcher) are Client Components. Blog and docs use MDX files under `content/`.
 
-**Tech Stack:** Next.js 15 · TypeScript · Tailwind CSS v4 · next-intl · MDX (`@next/mdx` + `gray-matter`) · Vercel
+**Tech Stack:** Next.js 16 · TypeScript · Tailwind CSS · next-intl · MDX (`@next/mdx` + `gray-matter`) · Vercel + GitHub Pages
+
+**Static export constraints:**
+- `middleware.ts` is NOT used (not supported in static export) — locale detection via root `page.tsx` client-side redirect instead
+- No API routes, no ISR
+- `generateStaticParams` required on all `[locale]` and dynamic routes
+- GitHub Actions workflow deploys `out/` directory to `gh-pages` branch
 
 ---
 
@@ -137,14 +143,18 @@ git commit -m "feat: map design tokens to Tailwind config"
 
 ---
 
-## Task 3: Configure next-intl
+## Task 3: Configure next-intl (static export mode)
+
+> Static export (`output: 'export'`) means `middleware.ts` cannot run.
+> We use `localePrefix: 'always'` so every URL has `/zh` or `/en`.
+> Locale detection at root is a client-side redirect in `src/app/page.tsx`.
 
 **Files:**
 - Create: `messages/zh.json`
 - Create: `messages/en.json`
 - Create: `src/i18n/request.ts`
 - Create: `src/i18n/routing.ts`
-- Create: `middleware.ts`
+- ~~Create: `middleware.ts`~~ — NOT needed for static export
 - Modify: `next.config.ts`
 
 **Step 1: Create `src/i18n/routing.ts`**
@@ -154,6 +164,7 @@ import { defineRouting } from 'next-intl/routing'
 export const routing = defineRouting({
   locales: ['zh', 'en'],
   defaultLocale: 'zh',
+  localePrefix: 'always',   // required for static export — no middleware
 })
 ```
 
@@ -174,17 +185,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
 })
 ```
 
-**Step 3: Create `middleware.ts` at project root**
-```ts
-import createMiddleware from 'next-intl/middleware'
-import { routing } from './src/i18n/routing'
-
-export default createMiddleware(routing)
-
-export const config = {
-  matcher: ['/((?!_next|.*\\..*).*)'],
-}
-```
+**Step 3: ~~Create `middleware.ts`~~ — SKIP (not supported in static export)**
 
 **Step 4: Update `next.config.ts`**
 ```ts
@@ -194,7 +195,10 @@ import createNextIntlPlugin from 'next-intl/plugin'
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 
 const nextConfig: NextConfig = {
-  // future MDX config goes here
+  output: 'export',        // static export for GitHub Pages + Vercel
+  trailingSlash: true,     // GitHub Pages needs trailing slashes
+  images: { unoptimized: true }, // required for static export
+  // MDX config added in Task 11
 }
 
 export default withNextIntl(nextConfig)
@@ -921,11 +925,21 @@ git commit -m "feat: add MDX support for blog and docs with gray-matter"
 - Modify: `src/app/[locale]/layout.tsx` (add metadata)
 
 **Step 1: Root redirect in `src/app/page.tsx`**
+
+Server-side `redirect()` doesn't work in static export. Use a client-side redirect instead:
 ```tsx
-import { redirect } from 'next/navigation'
+'use client'
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function RootPage() {
-  redirect('/zh')
+  const router = useRouter()
+  useEffect(() => {
+    // Detect browser language, default to zh
+    const lang = navigator.language.startsWith('en') ? 'en' : 'zh'
+    router.replace(`/${lang}`)
+  }, [router])
+  return null
 }
 ```
 
@@ -959,29 +973,86 @@ git commit -m "feat: root redirect to /zh and per-locale metadata"
 
 ---
 
-## Task 13: Deploy to Vercel
+## Task 13: GitHub Actions + Deploy
 
-**Step 1: Push all committed changes**
+### GitHub Pages via GitHub Actions
+
+**Files:**
+- Create: `.github/workflows/deploy.yml`
+
+**Step 1: Create `.github/workflows/deploy.yml`**
+```yaml
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment
+```
+
+**Step 2: Enable GitHub Pages**
+- Go to repo Settings → Pages
+- Source: **GitHub Actions**
+
+**Step 3: Push and verify**
 ```bash
 git push origin main
 ```
+Watch Actions tab — job should pass and site appears at `https://feibing2026.github.io/feibing-clawcross-website/` (or custom domain if DNS is set).
 
-**Step 2: Import project on Vercel**
+### Vercel Deploy
+
+**Step 4: Import on Vercel**
 - Go to https://vercel.com/new
-- Import `feibing2026/feibing-clawcross-website` from GitHub
-- Framework: Next.js (auto-detected)
-- Root directory: `.` (default)
-- No env vars needed for initial deploy
+- Import `feibing2026/feibing-clawcross-website`
+- Framework: Next.js (auto-detected), Root: `.`
+- No env vars needed
 
-**Step 3: Set custom domain**
-- In Vercel project settings → Domains
-- Add `clawcross.com` and `www.clawcross.com`
-- Follow DNS instructions (CNAME/A record at registrar)
+**Step 5: Custom domain**
+- Vercel project → Domains → add `clawcross.com` + `www.clawcross.com`
+- GitHub Pages: repo Settings → Pages → Custom domain → `clawcross.com`
+- At DNS registrar: CNAME `www` → `feibing2026.github.io` (or Vercel's target)
 
-**Step 4: Verify production**
-- Visit https://clawcross.com → should redirect to /zh landing page
-- Toggle to EN → should switch to /en
-- Check `/zh/blog` and `/zh/docs` stub pages load
+**Step 6: Commit the workflow**
+```bash
+git add .github/
+git commit -m "feat: add GitHub Actions deploy to GitHub Pages"
+git push origin main
+```
 
 ---
 
